@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohd Hammad | B.Tech Student Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Custom CSS for advanced animations, gradients, and effects */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a1a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        /* Animated Gradient Background */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #1a237e, #0d47a1, #004d40, #263238);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Typing Effect */
+        .typing-effect {
+            border-right: .15em solid #00e5ff; /* The cursor */
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00e5ff; }
+        }
+        
+        /* Scroll Animations */
+        .reveal {
+            position: relative;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 1s all ease;
+        }
+
+        .reveal.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            pointer-events: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00e5ff;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #00e5ff;
+        }
+        
+        /* Interactive Project Card */
+        .project-card .project-details {
+            transform: translateY(100%);
+            transition: transform 0.4s ease-out;
+        }
+        .project-card:hover .project-details {
+            transform: translateY(0);
+        }
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Header & Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white tracking-wider">MohdHammad.</a>
+            <ul class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                <li><a href="#home" class="text-white hover:text-cyan-400 transition-colors">Home</a></li>
+                <li><a href="#about" class="text-white hover:text-cyan-400 transition-colors">About</a></li>
+                <li><a href="#skills" class="text-white hover:text-cyan-400 transition-colors">Skills</a></li>
+                <li><a href="#projects" class="text-white hover:text-cyan-400 transition-colors">Projects</a></li>
+                <li><a href="#contact" class="text-white hover:text-cyan-400 transition-colors">Contact</a></li>
+            </ul>
+            <a href="#contact" class="hidden md:block bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/20">Hire Me</a>
+             <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white text-2xl z-50">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gray-900/90 backdrop-blur-sm z-40 hidden flex-col items-center justify-center space-y-8">
+        <a href="#home" class="text-white text-2xl">Home</a>
+        <a href="#about" class="text-white text-2xl">About</a>
+        <a href="#skills" class="text-white text-2xl">Skills</a>
+        <a href="#projects" class="text-white text-2xl">Projects</a>
+        <a href="#contact" class="text-white text-2xl">Contact</a>
+    </div>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center gradient-bg relative overflow-hidden">
+            <div id="particles-js" class="absolute inset-0"></div>
+            <div class="container mx-auto px-6 text-center z-10">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 leading-tight">
+                        Hi, I'm <span class="text-cyan-400">Mohd Hammad</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-white font-light mb-8">
+                        I am a <span id="typing-text" class="font-semibold"></span><span class="inline-block border-r-4 border-cyan-400 animate-ping"></span>
+                    </p>
+                    <p class="text-gray-300 max-w-2xl mx-auto mb-10">
+                        A passionate 3rd year B.Tech student from Dr. A.P.J. Abdul Kalam Technical University, specializing in creating dynamic and beautiful web experiences.
+                    </p>
+                    <a href="#projects" class="bg-white text-gray-900 font-bold py-3 px-8 rounded-full hover:bg-cyan-400 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-2xl">View My Work</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 md:py-32 bg-[#0a0a1a]">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="reveal">
+                        <img src="https://placehold.co/600x600/1a237e/ffffff?text=Mohd\nHammad" alt="Mohd Hammad" class="rounded-lg shadow-2xl w-full max-w-md mx-auto ring-4 ring-cyan-500/30">
+                    </div>
+                    <div class="reveal">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">About Me</h2>
+                        <p class="text-gray-300 mb-4">
+                            Hello! I am a dedicated and curious computer science student with a strong foundation in software development and problem-solving. Currently in my third year at AKTU, I thrive on turning complex problems into elegant, interactive digital experiences.
+                        </p>
+                        <p class="text-gray-300 mb-6">
+                            My journey in tech is driven by a passion for learning and a desire to build things that are both useful and beautiful. When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and drinking coffee.
+                        </p>
+                        <a href="HammadKhan_InternshalaResume.pdf" download class="inline-block bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/20">
+                            <i class="fas fa-download mr-2"></i>Download Resume
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 md:py-32 bg-gray-900/40">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-cyan-400 reveal">My Tech Stack</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+                    <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-java text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Java</h3>
+                    </div>
+                    <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-python text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Python</h3>
+                    </div>
+                    <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-js-square text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">JavaScript</h3>
+                    </div>
+                    <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-react text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">React</h3>
+                    </div>
+                    <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-node-js text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Node.js</h3>
+                    </div>
+                    <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fas fa-database text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">SQL</h3>
+                    </div>
+                    <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-html5 text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">HTML5</h3>
+                    </div>
+                     <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-css3-alt text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">CSS3</h3>
+                    </div>
+                     <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-git-alt text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Git</h3>
+                    </div>
+                     <!-- Skill Item -->
+                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-docker text-6xl text-cyan-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg">Docker</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 md:py-32 bg-[#0a0a1a]">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-cyan-400 reveal">Featured Projects</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Card 1 -->
+                    <div class="project-card glass-card rounded-lg overflow-hidden shadow-lg reveal">
+                        <div class="relative overflow-hidden">
+                            <img src="https://placehold.co/600x400/0d47a1/ffffff?text=Omegle+Clone" alt="Omegle Clone Project" class="w-full h-full object-cover transition-transform duration-400">
+                            <div class="project-details absolute inset-0 bg-black bg-opacity-70 p-6 flex flex-col justify-center items-center text-center">
+                                <h3 class="font-bold text-xl text-cyan-400 mb-2">Omegle Clone</h3>
+                                <p class="text-sm text-gray-300 mb-4">A real-time video chat application connecting random users, built with WebRTC, Node.js, and Socket.io.</p>
+                                <div class="space-x-4">
+                                    <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-github"></i> Code</a>
+                                    <a href="#" class="text-white hover:text-cyan-400"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="project-card glass-card rounded-lg overflow-hidden shadow-lg reveal">
+                         <div class="relative overflow-hidden">
+                            <img src="https://placehold.co/600x400/004d40/ffffff?text=Lock+Company+Website" alt="Lock Company Website Project" class="w-full h-full object-cover transition-transform duration-400">
+                            <div class="project-details absolute inset-0 bg-black bg-opacity-70 p-6 flex flex-col justify-center items-center text-center">
+                                <h3 class="font-bold text-xl text-cyan-400 mb-2">Secure Lock Solutions Website</h3>
+                                <p class="text-sm text-gray-300 mb-4">A professional business website for a lock company, featuring product showcases and a secure contact form.</p>
+                                <div class="space-x-4">
+                                    <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-github"></i> Code</a>
+                                    <a href="#" class="text-white hover:text-cyan-400"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project Card 3 -->
+                    <div class="project-card glass-card rounded-lg overflow-hidden shadow-lg reveal">
+                         <div class="relative overflow-hidden">
+                            <img src="https://placehold.co/600x400/263238/ffffff?text=Project+Three" alt="Project 3" class="w-full h-full object-cover transition-transform duration-400">
+                             <div class="project-details absolute inset-0 bg-black bg-opacity-70 p-6 flex flex-col justify-center items-center text-center">
+                                <h3 class="font-bold text-xl text-cyan-400 mb-2">Portfolio Website V1</h3>
+                                <p class="text-sm text-gray-300 mb-4">My first personal portfolio, built with plain HTML, CSS, and JavaScript to showcase my foundational skills.</p>
+                                <div class="space-x-4">
+                                    <a href="#" class="text-white hover:text-cyan-400"><i class="fab fa-github"></i> Code</a>
+                                    <a href="#" class="text-white hover:text-cyan-400"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 md:py-32 bg-gray-900/40">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-cyan-400 reveal">Get In Touch</h2>
+                    <p class="text-gray-300 mb-8 reveal">
+                        I'm currently looking for internship opportunities and am open to collaborations. My inbox is always open, whether you have a question or just want to say hi, I'll try my best to get back to you!
+                    </p>
+                    <div class="reveal">
+                        <a href="mailto:mohdhammad9359@gmail.com" class="inline-block bg-cyan-500 hover:bg-cyan-400 text-white font-bold text-lg py-4 px-8 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/20 transform hover:scale-105">
+                            Say Hello
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-10">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2025 Mohd Hammad. Designed with ❤️.</p>
+        </div>
+    </footer>
+
+    <!-- Particles.js CDN -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Particles.js Background ---
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#00e5ff"
+                        },
+                        "shape": {
+                            "type": "circle",
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#ffffff",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                         "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": { "opacity": 1 }
+                            },
+                            "push": { "particles_nb": 4 }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+
+            // --- Typing Text Animation ---
+            const typingTextElement = document.getElementById('typing-text');
+            if(typingTextElement) {
+                const roles = ["Creative Developer.", "Tech Enthusiast.", "Problem Solver.", "B.Tech Student."];
+                let roleIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+
+                function type() {
+                    const currentRole = roles[roleIndex];
+                    if (isDeleting) {
+                        typingTextElement.textContent = currentRole.substring(0, charIndex--);
+                    } else {
+                        typingTextElement.textContent = currentRole.substring(0, charIndex++);
+                    }
+
+                    if (!isDeleting && charIndex === currentRole.length + 1) {
+                        isDeleting = true;
+                        setTimeout(type, 1500); // Pause at end
+                    } else if (isDeleting && charIndex === -1) {
+                        isDeleting = false;
+                        roleIndex = (roleIndex + 1) % roles.length;
+                        setTimeout(type, 500); // Pause before new word
+                    } else {
+                        setTimeout(type, isDeleting ? 50 : 100);
+                    }
+                }
+                type();
+            }
+
+            // --- Scroll Reveal Animation ---
+            const revealElements = document.querySelectorAll('.reveal');
+            function revealOnScroll() {
+                const windowHeight = window.innerHeight;
+                revealElements.forEach(el => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    if (elementTop < windowHeight - elementVisible) {
+                        el.classList.add('active');
+                    } else {
+                        el.classList.remove('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Initial check
+
+            // --- Header Background on Scroll ---
+            const header = document.getElementById('header');
+            if(header) {
+                 window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.classList.add('bg-gray-900/80', 'backdrop-blur-sm', 'shadow-lg');
+                    } else {
+                        header.classList.remove('bg-gray-900/80', 'backdrop-blur-sm', 'shadow-lg');
+                    }
+                });
+            }
+
+            // --- Custom Cursor ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            if(cursorDot && cursorOutline) {
+                window.addEventListener('mousemove', (e) => {
+                    const posX = e.clientX;
+                    const posY = e.clientY;
+
+                    cursorDot.style.left = `${posX}px`;
+                    cursorDot.style.top = `${posY}px`;
+
+                    cursorOutline.style.left = `${posX}px`;
+                    cursorOutline.style.top = `${posY}px`;
+                    
+                    cursorDot.style.opacity = '1';
+                    cursorOutline.style.opacity = '1';
+                });
+                
+                 document.querySelectorAll('a, button, i, .project-card').forEach(el => {
+                    el.addEventListener('mouseover', () => {
+                        cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                        cursorOutline.style.borderColor = '#ffffff';
+
+                    });
+                    el.addEventListener('mouseout', () => {
+                        cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+                        cursorOutline.style.borderColor = '#00e5ff';
+                    });
+                });
+            }
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuIcon = mobileMenuBtn.querySelector('i');
+            
+            if(mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        mobileMenuIcon.classList.remove('fa-times');
+                        mobileMenuIcon.classList.add('fa-bars');
+                    } else {
+                        mobileMenuIcon.classList.remove('fa-bars');
+                        mobileMenuIcon.classList.add('fa-times');
+                    }
+                });
+
+                // Close menu when a link is clicked
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuIcon.classList.remove('fa-times');
+                        mobileMenuIcon.classList.add('fa-bars');
+                    });
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>
+
+

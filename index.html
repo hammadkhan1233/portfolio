@@ -11,17 +11,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* Custom CSS for advanced animations, gradients, and effects */
+        /* Base Colors & Fonts */
+        :root {
+            --bg-color: #0a0a1a;
+            --text-color: #e0e0e0;
+            --primary-color: #00e5ff;
+        }
+
+        /* Light Theme Colors */
+        .light-theme {
+            --bg-color: #f0f0f5;
+            --text-color: #1a1a2e;
+            --primary-color: #3b82f6;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #0a0a1a;
-            color: #e0e0e0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.5s, color 0.5s;
             overflow-x: hidden;
         }
 
         /* Animated Gradient Background */
         .gradient-bg {
             background: linear-gradient(-45deg, #1a237e, #0d47a1, #004d40, #263238);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        .light-theme .gradient-bg {
+            background: linear-gradient(-45deg, #a5b4fc, #818cf8, #93c5fd, #67e8f9);
             background-size: 400% 400%;
             animation: gradient-animation 15s ease infinite;
         }
@@ -40,15 +60,26 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
+
+        .light-theme .glass-card {
+            background: rgba(26, 26, 46, 0.05);
+            border: 1px solid rgba(26, 26, 46, 0.1);
+        }
+
         .glass-card:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
+        /* Skill Card Glow */
+        .glass-card.skill-card:hover {
+            box-shadow: 0 0 25px var(--primary-color), 0 0 50px var(--primary-color);
+        }
+
         /* Typing Effect */
         .typing-effect {
-            border-right: .15em solid #00e5ff; /* The cursor */
+            border-right: .15em solid var(--primary-color);
             white-space: nowrap;
             overflow: hidden;
             animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
@@ -61,7 +92,7 @@
 
         @keyframes blink-caret {
             from, to { border-color: transparent }
-            50% { border-color: #00e5ff; }
+            50% { border-color: var(--primary-color); }
         }
         
         /* Scroll Animations */
@@ -93,13 +124,15 @@
         .cursor-dot {
             width: 8px;
             height: 8px;
-            background-color: #00e5ff;
+            background-color: var(--primary-color);
+            transition: transform 0.1s ease-out;
         }
 
         .cursor-outline {
             width: 40px;
             height: 40px;
-            border: 2px solid #00e5ff;
+            border: 2px solid var(--primary-color);
+            transition: transform 0.2s ease-out;
         }
         
         /* Interactive Project Card */
@@ -114,33 +147,35 @@
             transform: scale(1.1);
         }
 
-        /* Dynamic Stars Falling Animation (Moved here for better organization) */
-        .stars-falling {
-            z-index: 5;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .stars-falling::before {
-            content: '';
+        /* New Floating Shapes Animation */
+        .floating-shapes {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, #fff 1px, transparent 1px);
-            background-size: 100px 100px;
-            opacity: 0.1;
-            animation: stars-falling-animation 60s linear infinite;
+            pointer-events: none;
+            overflow: hidden;
         }
 
-        @keyframes stars-falling-animation {
-            from {
-                background-position: 0 0;
-            }
-            to {
-                background-position: 10000px 10000px;
-            }
+        .floating-shapes div {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float-shapes 15s infinite ease-in-out;
+        }
+
+        .floating-shapes .shape-1 { width: 80px; height: 80px; top: 10%; left: 15%; animation-duration: 18s; }
+        .floating-shapes .shape-2 { width: 120px; height: 120px; top: 40%; left: 80%; animation-duration: 22s; }
+        .floating-shapes .shape-3 { width: 50px; height: 50px; top: 70%; left: 30%; animation-duration: 16s; }
+        .floating-shapes .shape-4 { width: 100px; height: 100px; top: 20%; left: 55%; animation-duration: 20s; }
+        .floating-shapes .shape-5 { width: 70px; height: 70px; top: 85%; left: 60%; animation-duration: 19s; }
+        .floating-shapes .shape-6 { width: 90px; height: 90px; top: 55%; left: 5%; animation-duration: 25s; }
+
+        @keyframes float-shapes {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-50px) rotate(180deg); opacity: 0.2; }
+            100% { transform: translateY(0) rotate(360deg); opacity: 0.1; }
         }
     </style>
 </head>
@@ -183,7 +218,14 @@
 
         <section id="home" class="min-h-screen flex items-center gradient-bg relative overflow-hidden">
             <div id="particles-js" class="absolute inset-0"></div>
-            <div class="stars-falling absolute inset-0"></div>
+            <div class="floating-shapes">
+                <div class="shape-1"></div>
+                <div class="shape-2"></div>
+                <div class="shape-3"></div>
+                <div class="shape-4"></div>
+                <div class="shape-5"></div>
+                <div class="shape-6"></div>
+            </div>
             <div class="container mx-auto px-6 text-center z-10">
                 <div class="max-w-4xl mx-auto">
                     <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 leading-tight">
@@ -200,14 +242,14 @@
             </div>
         </section>
 
-        <section id="about" class="py-20 md:py-32 bg-[#0a0a1a]">
+        <section id="about" class="py-20 md:py-32 bg-[#0a0a1a] light-theme:bg-[#f0f0f5]">
             <div class="container mx-auto px-6">
                 <div class="max-w-3xl mx-auto text-center reveal">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">About Me</h2>
-                    <p class="text-gray-300 mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-cyan-400 light-theme:text-blue-500">About Me</h2>
+                    <p class="text-gray-300 light-theme:text-gray-700 mb-4">
                         Hello! I am a dedicated and curious computer science student with a strong foundation in software development and problem-solving. Currently in my third year at AKTU, I thrive on turning complex problems into elegant, interactive digital experiences.
                     </p>
-                    <p class="text-gray-300 mb-6">
+                    <p class="text-gray-300 light-theme:text-gray-700 mb-6">
                         My journey in tech is driven by a passion for learning and a desire to build things that are both useful and beautiful. When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and drinking coffee.
                     </p>
                     <a href="HammadKhan_InternshalaResume.pdf" download class="inline-block bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/20">
@@ -217,57 +259,57 @@
             </div>
         </section>
 
-        <section id="skills" class="py-20 md:py-32 bg-gray-900/40 dark:bg-gray-800">
+        <section id="skills" class="py-20 md:py-32 bg-gray-900/40 light-theme:bg-gray-200">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-cyan-400 reveal">My Tech Stack</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-cyan-400 light-theme:text-blue-500 reveal">My Tech Stack</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-java text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-java text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">Java</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-python text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-python text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">Python</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-js-square text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-js-square text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">JavaScript</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-react text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-react text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">React</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-node-js text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-node-js text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">Node.js</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fas fa-database text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fas fa-database text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">SQL</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-html5 text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-html5 text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">HTML5</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-css3-alt text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-css3-alt text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">CSS3</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-git-alt text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-git-alt text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">Git</h3>
                     </div>
-                    <div class="glass-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
-                        <i class="fab fa-docker text-6xl text-cyan-400 mb-4"></i>
+                    <div class="glass-card skill-card p-6 rounded-lg flex flex-col items-center justify-center reveal">
+                        <i class="fab fa-docker text-6xl text-cyan-400 light-theme:text-blue-500 mb-4"></i>
                         <h3 class="font-semibold text-lg">Docker</h3>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="py-20 md:py-32 bg-[#0a0a1a]">
+        <section id="projects" class="py-20 md:py-32 bg-[#0a0a1a] light-theme:bg-[#f0f0f5]">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-cyan-400 reveal">Featured Projects</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-cyan-400 light-theme:text-blue-500 reveal">Featured Projects</h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="project-card glass-card rounded-lg overflow-hidden shadow-lg reveal">
                         <div class="relative overflow-hidden">
@@ -312,47 +354,37 @@
             </div>
         </section>
 
-        <section id="contact" class="py-20 md:py-32 bg-gray-900/40">
+        <section id="contact" class="py-20 md:py-32 bg-gray-900/40 light-theme:bg-gray-200">
             <div class="container mx-auto px-6">
                 <div class="max-w-3xl mx-auto text-center reveal">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">Get In Touch</h2>
-                    <p class="text-gray-300 mb-8">
-                        I'm currently looking for internship opportunities and am open to collaborations. Fill out the form below to get in touch!
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-cyan-400 light-theme:text-blue-500">Get In Touch</h2>
+                    <p class="text-gray-300 light-theme:text-gray-700 mb-8">
+                        I'm currently looking for internship opportunities and am open to collaborations.
                     </p>
                 </div>
                 
                 <div class="max-w-xl mx-auto glass-card p-8 rounded-lg reveal">
-                    <form action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" id="contact-form">
-                        <div class="mb-6">
-                            <label for="name" class="block text-gray-300 font-semibold mb-2 text-left">Name</label>
-                            <input type="text" id="name" name="name" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:border-cyan-400 focus:outline-none" required>
-                        </div>
-                        <div class="mb-6">
-                            <label for="email" class="block text-gray-300 font-semibold mb-2 text-left">Email</label>
-                            <input type="email" id="email" name="email" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:border-cyan-400 focus:outline-none" required>
-                        </div>
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-300 font-semibold mb-2 text-left">Message</label>
-                            <textarea id="message" name="message" rows="5" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:border-cyan-400 focus:outline-none" required></textarea>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/20 transform hover:scale-105">
-                                Send Message
-                            </button>
-                        </div>
-                    </form>
+                    <h3 class="text-xl font-bold text-white light-theme:text-blue-900 mb-4">Direct Contact:</h3>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
+                        <a href="mailto:youremail@example.com" class="bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/20 light-theme:bg-blue-500 light-theme:hover:bg-blue-400 light-theme:shadow-blue-500/20">
+                            <i class="fas fa-envelope mr-2"></i>Email Me
+                        </a>
+                        <a href="https://wa.me/918445577300" target="_blank" class="bg-green-500 hover:bg-green-400 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/20">
+                            <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-gray-900 py-10">
-        <div class="container mx-auto px-6 text-center text-gray-400">
+    <footer class="bg-gray-900 light-theme:bg-gray-300 py-10">
+        <div class="container mx-auto px-6 text-center text-gray-400 light-theme:text-gray-600">
             <div class="flex justify-center space-x-6 mb-6">
-                <a href="https://github.com/hammadkhan1233" target="_blank" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/mohd-hammad-4a8688214?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fab fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/ig_.hammadkhan/" target="_blank" class="text-2xl hover:text-cyan-400 transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/hammadkhan1233" target="_blank" class="text-2xl hover:text-cyan-400 light-theme:hover:text-blue-500 transition-colors"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/mohd-hammad-4a8688214?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-2xl hover:text-cyan-400 light-theme:hover:text-blue-500 transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/ig_.hammadkhan/" target="_blank" class="text-2xl hover:text-cyan-400 light-theme:hover:text-blue-500 transition-colors"><i class="fab fa-instagram"></i></a>
             </div>
             <p>&copy; 2025 Mohd Hammad. Designed with ❤️.</p>
         </div>
@@ -492,30 +524,45 @@
             // --- Custom Cursor ---
             const cursorDot = document.querySelector('.cursor-dot');
             const cursorOutline = document.querySelector('.cursor-outline');
-            if(cursorDot && cursorOutline) {
-                window.addEventListener('mousemove', (e) => {
-                    const posX = e.clientX;
-                    const posY = e.clientY;
+            if (cursorDot && cursorOutline) {
+                let mouseX = 0, mouseY = 0;
+                let dotX = 0, dotY = 0;
+                let outlineX = 0, outlineY = 0;
 
-                    cursorDot.style.left = `${posX}px`;
-                    cursorDot.style.top = `${posY}px`;
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
 
-                    cursorOutline.style.left = `${posX}px`;
-                    cursorOutline.style.top = `${posY}px`;
-                    
                     cursorDot.style.opacity = '1';
                     cursorOutline.style.opacity = '1';
                 });
+
+                const animateCursor = () => {
+                    dotX += (mouseX - dotX) * 0.1;
+                    dotY += (mouseY - dotY) * 0.1;
+
+                    outlineX += (dotX - outlineX) * 0.2;
+                    outlineY += (dotY - outlineY) * 0.2;
+
+                    cursorDot.style.left = `${dotX}px`;
+                    cursorDot.style.top = `${dotY}px`;
+                    cursorOutline.style.left = `${outlineX}px`;
+                    cursorOutline.style.top = `${outlineY}px`;
+                    
+                    requestAnimationFrame(animateCursor);
+                };
+                animateCursor();
                 
-                 document.querySelectorAll('a, button, i, .project-card').forEach(el => {
+                 document.querySelectorAll('a, button, i, .project-card, .skill-card').forEach(el => {
                     el.addEventListener('mouseover', () => {
                         cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
                         cursorOutline.style.borderColor = '#ffffff';
-
+                        cursorDot.style.transform = 'translate(-50%, -50%) scale(0.5)';
                     });
                     el.addEventListener('mouseout', () => {
                         cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
-                        cursorOutline.style.borderColor = '#00e5ff';
+                        cursorOutline.style.borderColor = 'var(--primary-color)';
+                        cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
                     });
                 });
             }
@@ -551,50 +598,37 @@
             const themeToggle = document.getElementById('theme-toggle');
             const themeIcon = document.getElementById('theme-icon');
             const htmlElement = document.documentElement;
-
-            // Set initial theme based on local storage or system preference
+            
+            // Set initial theme based on local storage
             const savedTheme = localStorage.getItem('theme');
-            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            const initialTheme = savedTheme || systemTheme;
-
-            if (initialTheme === 'dark') {
-                htmlElement.classList.add('dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
+            if (savedTheme) {
+                htmlElement.className = savedTheme;
             } else {
-                htmlElement.classList.remove('dark');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
+                 htmlElement.className = 'dark-theme'; // Default to dark if no preference is saved
             }
 
-            themeToggle.addEventListener('click', () => {
-                htmlElement.classList.toggle('dark');
-                if (htmlElement.classList.contains('dark')) {
-                    localStorage.setItem('theme', 'dark');
+            // Update icon and colors based on current theme
+            const updateThemeUI = (theme) => {
+                if (theme === 'light-theme') {
                     themeIcon.classList.remove('fa-moon');
                     themeIcon.classList.add('fa-sun');
                 } else {
-                    localStorage.setItem('theme', 'light');
                     themeIcon.classList.remove('fa-sun');
                     themeIcon.classList.add('fa-moon');
                 }
+            };
+            updateThemeUI(htmlElement.className);
+
+            themeToggle.addEventListener('click', () => {
+                if (htmlElement.classList.contains('light-theme')) {
+                    htmlElement.classList.remove('light-theme');
+                    localStorage.setItem('theme', 'dark-theme');
+                } else {
+                    htmlElement.classList.add('light-theme');
+                    localStorage.setItem('theme', 'light-theme');
+                }
+                updateThemeUI(htmlElement.className);
             });
-
-            // --- Basic Form Validation ---
-            const contactForm = document.getElementById('contact-form');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(event) {
-                    const name = document.getElementById('name').value;
-                    const email = document.getElementById('email').value;
-                    const message = document.getElementById('message').value;
-
-                    if (name === "" || email === "" || message === "") {
-                        alert("Please fill in all fields before sending.");
-                        event.preventDefault(); // Stop the form from submitting
-                    }
-                });
-            }
-
         });
     </script>
 </body>
